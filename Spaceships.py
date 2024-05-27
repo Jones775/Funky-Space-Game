@@ -35,7 +35,7 @@ class Small_Starfighter(Spaceship):
 
     def __init__(self, coordinates):
         super().__init__("Small Starfighter", 5, 3, 50)
-        self.texture = "Bitte Pfad der Textur angeben"
+        self.texture = "textures\\spaceship_textures\\Small_Starfighter.png"
         self.coordinates = coordinates
 
 class Battle_Cruiser(Spaceship):
