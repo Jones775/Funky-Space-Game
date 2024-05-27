@@ -8,7 +8,7 @@ screen = pygame.display.set_mode((1500, 800))
 
 
 
-ship_image = pygame.image.load('textures\\spaceship_textures\\Small_Starfighter.png').convert()
+ship_image = pygame.image.load('textures\\spaceship_textures\\Cargo_Vessel.png').convert()
 
 
 ship_image = pygame.transform.scale(ship_image, (200, 100))
