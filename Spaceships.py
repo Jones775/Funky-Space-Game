@@ -26,7 +26,7 @@ class Cargo_Vessel(Spaceship):
 
     def __init__(self, coordinates):
         super().__init__("Cargo Vessel", 0, 1, 30)
-        self.texture = "Bitte Pfad der Textur angeben"
+        self.texture = "textures\\spaceship_textures\\Cargo_Vessel.png"
         self.coordinates = coordinates
 
 
@@ -42,7 +42,7 @@ class Battle_Cruiser(Spaceship):
 
     def __init__(self, coordinates):
         super().__init__("Battle Cruiser", 5, 20, 35)
-        self.texture = "Bitte Pfad der Textur angeben"
+        self.texture = "textures\\spaceship_textures\\Battle_Cruiser.png"
         self.coordinates = coordinates
 
 class Blockade_Runner(Spaceship):
