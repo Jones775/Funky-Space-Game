@@ -29,6 +29,7 @@ while running:
         running = quit_game(event, running)
 
         mouse_was_pressed, start_x, start_y, end_x, end_y = scroll(all_objects_on_screen, mouse_was_pressed, start_x, start_y, end_x, end_y)
+        zooming(event, all_objects_on_screen)
 
         print_all_objects(screen, all_objects_on_screen)
 

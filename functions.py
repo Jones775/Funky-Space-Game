@@ -51,29 +51,32 @@ def scroll(all_objects_on_screen, mouse_was_pressed, start_x, start_y, end_x, en
             start_x, start_y = pygame.mouse.get_pos()
             mouse_was_pressed = True
             
-
-
-
-
-    #Check if all variables are assigned, which means, the function was executed twice
-    if start_x is not None and start_y is not None and end_x is not None and end_y is not None:
-        x_offset = end_x - start_x
-        #The y-Axis is upside down so the order is different
-        y_offset = start_y - end_y
-
-        print("Start X", start_x)
-        print("Start Y", start_y)
-        print("End X", end_x)
-        print("End Y", end_y)
-
-        
-
-    
-    
-
     return mouse_was_pressed, start_x, start_y, end_x, end_y
-    
-    
+
+#This function is used bvy the zoom function
+def scale_all_objects(all_objects_on_screen, zoom):
+
+    for object in all_objects_on_screen:
+        hypothetical_scale_x = (object.scale[0] - zoom * 10)
+        hypothetical_scale_y = (object.scale[1] - zoom * 10) 
+        if hypothetical_scale_x <= 0 or hypothetical_scale_y <= 0:
+            return 1
+
+    for object in all_objects_on_screen:
+        #Calculate the Size ratio
+        size_ratio = object.scale[1] / object.scale[0]
+
+        #if the zoom is positiv, the objects should get smaller
+        object.scale[0] -= zoom * 10
+        object.scale[1] = object.scale[0] * size_ratio
+ 
+
+def zooming(event, all_objects_on_screen):
+    if event.type == pygame.MOUSEWHEEL:
+        zoom = event.y
+        scale_all_objects(all_objects_on_screen, zoom)
+
+   
 def print_all_objects(screen, all_objects_on_screen):
     for object in all_objects_on_screen:
         print_object(screen, object)
