@@ -1,38 +1,42 @@
 import pygame
 import time
+from Spaceships import *
+import Buildings
+from functions import *
 
 pygame.init()
 
 #Pygame Variable
 screen = pygame.display.set_mode((1500, 800))
 
-
-
-ship_image = pygame.image.load('textures\\spaceship_textures\\Battle_Cruiser.png').convert_alpha()
-ship_image = pygame.transform.scale(ship_image, (400, 200))
+all_objects_on_screen = []
 
 
 
-ship2 = pygame.image.load('textures\\spaceship_textures\\Small_Starfighter.png').convert_alpha()
-ship2 = pygame.transform.scale(ship2, (200, 100))
+small_sf = Small_Starfighter([800, 600], all_objects_on_screen)
+cargo_vs = Cargo_Vessel([400, 500], all_objects_on_screen)
 
-ship3 = pygame.image.load('textures\\spaceship_textures\\Cargo_Vessel.png').convert_alpha()
-ship3 = pygame.transform.scale(ship3, (200, 100))
+
+
 
 running = True
 while running:
     
     for event in pygame.event.get():
         
-        if event.type==pygame.QUIT:
-            running=False
+
+        screen.fill(pygame.Color("dark blue"))
+        running = quit_game(event, running)
+
+        mouse_was_pressed, start_x, start_y, end_x, end_y = scroll(all_objects_on_screen, mouse_was_pressed, start_x, start_y, end_x, end_y)
+
+        print_all_objects(screen, all_objects_on_screen)
 
         
 
-    screen.fill(pygame.Color("dark blue"))
-    screen.blit(ship_image, (200, 100))
-    screen.blit(ship2, (500, 500))
-    screen.blit(ship3, (800, 600))
+    
+    
+    
     
 
     pygame.display.flip()

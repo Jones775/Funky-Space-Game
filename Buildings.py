@@ -2,10 +2,12 @@
 
 class Building:
 
-    def __init__(self, name, hp, texture):
+    def __init__(self, name, hp, texture, coordinates, scale):
         self.name = name
         self.hp = hp
         self.texture = texture
+        self.coordinates = coordinates
+        self.scale = scale
     
     def loose_hp():
         pass

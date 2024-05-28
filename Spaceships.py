@@ -1,13 +1,17 @@
 
 class Spaceship():
 
-    def __init__(self, name, damage, hp, velocity, texture, coordinates):
+    def __init__(self, name, damage, hp, velocity, texture, coordinates, scale, all_objects_on_screen):
         self.name = name
         self.damage = damage
         self.hp = hp
         self.velocity = velocity
         self.texture = texture
         self.coordinates = coordinates
+        self.scale = scale
+
+
+        all_objects_on_screen.append(self)
 
 
     def die():
@@ -24,19 +28,17 @@ class Spaceship():
 
 class Cargo_Vessel(Spaceship):
 
-    def __init__(self, coordinates):
-        super().__init__("Cargo Vessel", 0, 1, 30)
-        self.texture = "textures\\spaceship_textures\\Cargo_Vessel.png"
-        self.coordinates = coordinates
+    def __init__(self, coordinates, all_objects_on_screen):
+        super().__init__("Cargo Vessel", 0, 1, 30, "textures\\spaceship_textures\\Cargo_Vessel.png", coordinates, [200,100], all_objects_on_screen)
+        
 
 
 
 class Small_Starfighter(Spaceship):
 
-    def __init__(self, coordinates):
-        super().__init__("Small Starfighter", 5, 3, 50)
-        self.texture = "textures\\spaceship_textures\\Small_Starfighter.png"
-        self.coordinates = coordinates
+    def __init__(self, coordinates, all_objects_on_screen):
+        super().__init__("Small Starfighter", 5, 3, 50, "textures\\spaceship_textures\\Small_Starfighter.png", coordinates, [200,100], all_objects_on_screen)
+
 
 class Battle_Cruiser(Spaceship):
 
@@ -63,7 +65,7 @@ class Carrier_Ship(Spaceship):
 
     def __init__(self, coordinates, ships):
         super().__init__("Carrier Ship", 7, 60, 10)
-        self.texture = "Bitte Pfad der Textur angeben"
+        self.texture = "textures\\spaceship_textures\\Carrier_Ship.png"
         self.coordinates = coordinates
         self.ships = ships
 
