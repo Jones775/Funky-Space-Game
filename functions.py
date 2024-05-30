@@ -56,6 +56,7 @@ def scroll(all_objects_on_screen, mouse_was_pressed, start_x, start_y, end_x, en
 #This function is used bvy the zoom function
 def scale_all_objects(all_objects_on_screen, zoom):
 
+    #Check if zoom limit is reached
     for object in all_objects_on_screen:
         hypothetical_scale_x = (object.scale[0] - zoom * 10)
         hypothetical_scale_y = (object.scale[1] - zoom * 10) 
@@ -75,6 +76,8 @@ def zooming(event, all_objects_on_screen):
     if event.type == pygame.MOUSEWHEEL:
         zoom = event.y
         scale_all_objects(all_objects_on_screen, zoom)
+        #TODO because the objects are scaled up when zooming in, the relative distance between the objects gets smaller.
+        #Please detect the mouse position, then calculate the distance of every object to the mouse cursor and then move every object away from it
 
    
 def print_all_objects(screen, all_objects_on_screen):
@@ -85,8 +88,16 @@ def print_object(screen, object):
 
     object_image = pygame.image.load(object.texture).convert_alpha()
     object_image = pygame.transform.scale(object_image, object.scale)
+    
+    #Pygame blits the image at upper left side as the middle, but it should be printed with the middle as the middle
+    height = object_image.get_height()
+    width = object_image.get_width()
 
-    screen.blit(object_image, object.coordinates)
+    y_offset = height / 2
+    x_offset = width / 2
+    real_coordinates = [object.coordinates[0] - x_offset, object.coordinates[1] - y_offset]
+
+    screen.blit(object_image, real_coordinates)
     
 
 def zoom():
