@@ -23,6 +23,13 @@ class Spaceship():
     def loose_hp():
         pass
 
+    def change_coordinates(self, offset):
+        x_offset = offset[0]
+        y_offset = offset[1]
+        
+        self.coordinates[0] += x_offset
+        self.coordinates[1] += y_offset
+
 
 
 

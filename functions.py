@@ -1,4 +1,5 @@
 import pygame
+import copy
 
 #Variables
 
@@ -71,13 +72,147 @@ def scale_all_objects(all_objects_on_screen, zoom):
         object.scale[0] -= zoom * 10
         object.scale[1] = object.scale[0] * size_ratio
  
+def distance_of_all_objects_to_mouse(all_objects_on_screen):
+    all_distances = {}
+    mouse_position = pygame.mouse.get_pos()
+
+    for object in all_objects_on_screen:
+        coordinates = object.coordinates
+        x_offset = coordinates[0] - mouse_position[0]
+        y_offset = coordinates[1] - mouse_position[1]
+        all_distances[object] = [x_offset, y_offset]
+    print(all_distances)
+    return all_distances
+
+#This function returns a dictionary which has a specific object as key and as value another dictionary which has the other objects as keys and the distance of the first object as value
+def distance_of_all_objects_to_each_other(all_objects_on_screen):
+    distances = {}
+    for start_object in all_objects_on_screen:
+        single_distance = {}
+        
+        for end_object in all_objects_on_screen:
+            if end_object is not start_object:
+                x_distance = start_object.coordinates[0] - end_object.coordinates[0]
+                y_distance = start_object.coordinates[1] - end_object.coordinates[1]
+                single_distance[end_object] = [x_distance, y_distance]
+        distances[start_object] = single_distance
+    return distances
+
+
+#This function moves all objects away from each other
+#The function is used in the zooming function to create the effect of all objects getting smaller and moving away from each other
+def move_all_objects_away_from_each_other(zoom, all_objects_on_screen):
+    
+    distances = distance_of_all_objects_to_each_other(all_objects_on_screen)
+    num_objects = len(all_objects_on_screen)
+
+    #Calculate a new position for every object
+    for start_object in distances:
+        #The vector to the new position of the object
+        x_offset = 0
+        y_offset = 0
+
+        for end_object in distances[start_object]:
+            dist_to_obj = distances[start_object][end_object]
+            print("dist.to.obj",dist_to_obj)
+            x_offset += dist_to_obj[0]
+            y_offset += dist_to_obj[1]
+
+        x_offset = x_offset / (num_objects * -22 * zoom)
+        y_offset = y_offset / (num_objects * -22 * zoom)
+        start_object.change_coordinates((x_offset, y_offset))
+
+
+
+
+
+
 
 def zooming(event, all_objects_on_screen):
     if event.type == pygame.MOUSEWHEEL:
         zoom = event.y
+        print("Zoom:",zoom)
         scale_all_objects(all_objects_on_screen, zoom)
         #TODO because the objects are scaled up when zooming in, the relative distance between the objects gets smaller.
-        #Please detect the mouse position, then calculate the distance of every object to the mouse cursor and then move every object away from it
+        #Please calculate the distance of every object to every other object and then move all objects away from each other
+        distances = distance_of_all_objects_to_mouse(all_objects_on_screen)
+        keys = distances.keys()
+        for key in keys:
+
+             
+            object_distance_old = distances[key]
+            object_distance_new = copy.deepcopy(distances[key])
+            print("Alt", object_distance_old)
+
+
+        
+            move_all_objects_away_from_each_other(zoom, all_objects_on_screen)
+
+
+
+
+            """if zoom < 0:
+                if object_distance_new[0] < 0:
+                    object_distance_new[0] -= zoom * 10 * -1
+                else:    
+                    object_distance_new[0] += zoom * 10 * -1
+                #print(object_distance_new[0])
+
+                if object_distance_new[1] < 0:
+                    object_distance_new[1] -= zoom * 10 * -1
+                else:    
+                    object_distance_new[1] += zoom * 10 * -1
+
+               
+            elif zoom > 0:
+
+                
+                if object_distance_new[0] < 0:
+                    object_distance_new[0] += zoom * 10 * -1
+                else:    
+                    object_distance_new[0] -= zoom * 10 * -1
+                #print(object_distance_new[0])
+
+                if object_distance_new[1] < 0:
+                    object_distance_new[1] += zoom * 10 * -1
+                else:    
+                    object_distance_new[1] -= zoom * 10 * -1
+
+
+
+
+
+
+            x_offset = object_distance_new[0] - object_distance_old[0]
+            y_offset = object_distance_new[1] - object_distance_old[1]
+            distances[key] = object_distance_new
+
+            key.change_coordinates((x_offset, y_offset))
+            print("Ende")
+            """
+
+            """
+            print("Zoom2:",zoom)
+            object_distance_old = distances[key]
+
+            distances_copy = distances.copy()
+            object_distance_new = distances_copy[key]
+            print("objectdistanceanfang",object_distance_new)
+            print("objectdistanceold anfang", object_distance_old)
+            object_distance_new[0] += zoom * 100
+            object_distance_new[1] += zoom * 100
+            print("objectdistance",object_distance_new[0])
+            print("distances",distances[key][0])
+            x_offset = object_distance_new[0] - object_distance_old[0]
+            y_offset = object_distance_new[1] - object_distance_old[1]
+            distances[key] = object_distance_new
+            #print(distances)
+            print(x_offset)
+            print(y_offset)
+            """
+            
+            
+
 
    
 def print_all_objects(screen, all_objects_on_screen):

@@ -15,6 +15,10 @@ all_objects_on_screen = []
 
 small_sf = Small_Starfighter([800, 600], all_objects_on_screen)
 cargo_vs = Cargo_Vessel([400, 500], all_objects_on_screen)
+small_sf2 = Small_Starfighter([900, 500], all_objects_on_screen)
+
+
+
 
 
 
