@@ -1,4 +1,16 @@
 
+class Destination():
+    
+    def __init__(self, coordinates, ship, all_objects_on_screen):
+        self.coordinates = coordinates
+        self.scale = [100, 50]
+        #The ship this Destination belongs to
+        self.ship = ship
+        self.texture = "textures\\other_textures\\Destination_peaceful.png"
+        
+
+        all_objects_on_screen.append(self)
+
 class Spaceship():
 
     def __init__(self, name, damage, hp, velocity, texture, coordinates, scale, all_objects_on_screen):
@@ -22,6 +34,18 @@ class Spaceship():
 
     def loose_hp():
         pass
+
+    def fly(self, destination, all_objects_on_screen):
+
+        if isinstance(destination, Destination):
+            pass
+            #TODO Here you should move the ship towards the destination 
+        else:
+
+            return Destination(destination, self, all_objects_on_screen)
+
+
+
 
     def change_coordinates(self, offset):
         x_offset = offset[0]

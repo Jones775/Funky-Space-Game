@@ -1,5 +1,6 @@
 import pygame
 import copy
+import datetime
 
 #Variables
 
@@ -152,9 +153,29 @@ def zooming(event, all_objects_on_screen):
             move_all_objects_away_from_each_other(zoom, all_objects_on_screen)
             
 
+def print_font(font, text, screen, coordinates):
+    text = font.render(text, True, (255, 255, 255))
+    screen.blit(text, coordinates)
+
+def calculate_fps(times, counter, final_counter):
+
+    if times[0] == 0:
+        times[0] = datetime.datetime.now()
+        times[1] = times[0] + datetime.timedelta(seconds=1)
+        return times, counter, final_counter
+    elif datetime.datetime.now() < times[1]:
+        counter += 1
+        return times, counter, final_counter
+    elif datetime.datetime.now() >= times[1]:
+            
+            times[0] = 0
+            times[1] = 1
+            final_counter = counter
+            counter = 0
+            return times, counter, final_counter
 
 
-
+    
            
             
 
@@ -180,11 +201,31 @@ def print_object(screen, object):
     screen.blit(object_image, real_coordinates)
     
 
-def zoom():
-    pass
+
 
 def quit_game(event, running):
 
     if event.type==pygame.QUIT:
         running=False
-    return running    
+    return running
+
+
+#TODO
+def check_if_mouse_position_is_between_coordinates():
+    pass
+
+def print_start_screen(screen, screen_scale, event, start_screen_bool, background):
+    
+    screen.blit(background, (0,0))
+
+    start_game_width = 600
+    start_game_height = 400
+    start_game = pygame.image.load("textures\\other_textures\\Start_Game.png")
+    start_game = pygame.transform.scale(start_game, (start_game_width, start_game_height))
+    
+    position = ((screen_scale[0] / 2) - (start_game_width/2), (screen_scale[1] / 3) - (start_game_height /2))
+    screen.blit(start_game, position)
+
+
+    #while True:
+        #pass
