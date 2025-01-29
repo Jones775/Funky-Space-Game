@@ -26,7 +26,7 @@ temp_counter = 0
 frame_counter = 0
 
 
-
+#Fonts
 freesansbold_font = pygame.font.Font('freesansbold.ttf', 32)
 
 
@@ -48,8 +48,8 @@ planet1 = Planet([100, 400], all_objects_on_screen)
 
 desti = [100, 900]
 
-#This is set to False for testing purposes, pls set it to true TODO
-start_screen_bool = False
+
+start_screen_bool = True
 running = True
 while running:
     
@@ -70,7 +70,7 @@ while running:
         
 
         if start_screen_bool:
-            print_start_screen(screen, (screen_width, screen_height), event, start_screen_bool, background)
+            start_screen_bool = print_start_screen(screen, (screen_width, screen_height), event, start_screen_bool, background)
         else:
             mouse_was_pressed, start_x, start_y, end_x, end_y = scroll(all_objects_on_screen, mouse_was_pressed, start_x, start_y, end_x, end_y)
             zooming(event, all_objects_on_screen)

@@ -210,12 +210,20 @@ def quit_game(event, running):
     return running
 
 
-#TODO
-def check_if_mouse_position_is_between_coordinates():
-    pass
+#This only works for normal rectangles
+def check_if_mouse_position_is_between_coordinates(top_left, bottom_right):
+    mouse_position = pygame.mouse.get_pos()
+    
+    if mouse_position[0] >= top_left[0] and mouse_position[0] <= bottom_right[0]:
+        if mouse_position[1] >= top_left[1] and mouse_position[1] <= bottom_right[1]:
+            return True
+        else: 
+            return False
+    else: 
+        return False
 
 def print_start_screen(screen, screen_scale, event, start_screen_bool, background):
-    
+    #TODO I think this does not work because the image is transparent but pygame still blits the whole image, so even the areas of the image which are not seen on screen count as the area of the picture
     screen.blit(background, (0,0))
 
     start_game_width = 600
@@ -226,6 +234,18 @@ def print_start_screen(screen, screen_scale, event, start_screen_bool, backgroun
     position = ((screen_scale[0] / 2) - (start_game_width/2), (screen_scale[1] / 3) - (start_game_height /2))
     screen.blit(start_game, position)
 
+    print("Position", position, (position[0]+start_game_width, position[1]+start_game_height))
+    print(pygame.mouse.get_pos())
+    #For testing purposes pls remove TODO
+    start_game = pygame.transform.scale(start_game, (start_game_width, start_game_height))
+    screen.blit(start_game, position)
 
-    #while True:
-        #pass
+    if check_if_mouse_position_is_between_coordinates(position, (position[0]+start_game_width, position[1]+start_game_height)):
+        print("Hallo")
+        if pygame.mouse.get_pressed()[0]:
+            print("Moin")
+            start_screen_bool = False
+            return start_screen_bool
+    return start_screen_bool
+
+
